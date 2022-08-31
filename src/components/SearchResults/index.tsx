@@ -1,3 +1,9 @@
 import SearchResults from 'components/SearchResults/SearchResults';
+import { getPersons } from 'store/persons/selectors';
+import { connect } from 'react-redux';
 
-export default SearchResults;
+const mapStateToProps = (state: any) => ({
+  persons: getPersons(state),
+});
+
+export default connect(mapStateToProps)(SearchResults);

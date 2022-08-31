@@ -4,7 +4,7 @@ import StyledInput from 'components/SearchBar/styled/TextField.styled';
 import { Props } from 'components/SearchBar/types';
 import { SEARCH_PEOPLE_URL } from 'services/apiConfig';
 
-const SearchBar = ({ fetchPersons, persons }: Props) => {
+const SearchBar = ({ fetchPersons }: Props) => {
   const [inputValue, setInputValue] = useState<string>('');
 
   return (
@@ -26,7 +26,7 @@ const SearchBar = ({ fetchPersons, persons }: Props) => {
         />
         <Button
           variant="contained"
-          onClick={() => fetchPersons(`${SEARCH_PEOPLE_URL}inputValue`)}
+          onClick={() => fetchPersons(`${SEARCH_PEOPLE_URL}${inputValue}`)}
         >
           Search
         </Button>

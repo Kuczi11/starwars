@@ -2,6 +2,7 @@ import React from 'react';
 import {
   Grid,
   Table,
+  TableBody,
   TableCell,
   TableContainer,
   TableHead,
@@ -10,7 +11,15 @@ import {
 } from '@mui/material';
 import headers from 'components/SearchResults/headers';
 
-const SearchResults = () => {
+interface Props {
+  persons: Person[];
+}
+
+interface Person {
+  name: string;
+}
+
+const SearchResults = ({ persons }: Props) => {
   return (
     <Grid container justifyContent="center">
       <Grid item xs={12} md={7}>
@@ -25,6 +34,15 @@ const SearchResults = () => {
                 ))}
               </TableRow>
             </TableHead>
+            <TableBody>
+              {persons.map((person) => (
+                <TableRow key={person.name}>
+                  <TableCell align="right">
+                    <Typography variant="h3">{person.name}</Typography>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
           </Table>
         </TableContainer>
       </Grid>

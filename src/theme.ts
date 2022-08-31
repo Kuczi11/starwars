@@ -18,6 +18,11 @@ const theme = createTheme({
       color: '#FFE81F',
       fontWeight: '500',
     },
+    h3: {
+      fontSize: '1.5rem',
+      color: '#FFE81F',
+      fontWeight: '500',
+    },
   },
 });
 

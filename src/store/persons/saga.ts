@@ -14,7 +14,9 @@ interface Body {
   results: Person[];
 }
 
-function* fetchPersonsSaga({ payload: { query }: ReturnType<typeof fetchPersons>}) {
+function* fetchPersonsSaga({
+  payload: { query },
+}: ReturnType<typeof fetchPersons>) {
   try {
     const result: Result = yield call(fetch, query);
     const body: Body = yield call([result, result?.json]);

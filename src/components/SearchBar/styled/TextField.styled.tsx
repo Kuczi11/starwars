@@ -1,7 +1,11 @@
 import styled from '@emotion/styled';
 import { TextField, Theme } from '@mui/material';
 
-const StyledInput = styled(TextField)((theme: Theme) => ({
+interface ThemeProps {
+  theme: Theme;
+}
+
+const StyledInput = styled(TextField)(({ theme }: ThemeProps) => ({
   width: '100%',
   margin: '0 2rem',
 
