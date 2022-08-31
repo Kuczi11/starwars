@@ -10,6 +10,7 @@ import {
   Typography,
 } from '@mui/material';
 import headers from 'components/SearchResults/headers';
+import SingleResult from 'components/SingleResult';
 
 interface Props {
   persons: Person[];
@@ -17,6 +18,7 @@ interface Props {
 
 interface Person {
   name: string;
+  homeworld: string;
 }
 
 const SearchResults = ({ persons }: Props) => {
@@ -36,11 +38,7 @@ const SearchResults = ({ persons }: Props) => {
             </TableHead>
             <TableBody>
               {persons.map((person) => (
-                <TableRow key={person.name}>
-                  <TableCell align="right">
-                    <Typography variant="h3">{person.name}</Typography>
-                  </TableCell>
-                </TableRow>
+                <SingleResult key={person.name} person={person} />
               ))}
             </TableBody>
           </Table>

@@ -5,11 +5,11 @@ const headers = [
   },
   {
     id: 1,
-    content: 'Homeland name',
+    content: 'Homeworld name',
   },
   {
     id: 2,
-    content: 'Homeland population',
+    content: 'Homeworld population',
   },
 ];
 
