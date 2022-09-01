@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { TextField, Theme } from '@mui/material';
 
-interface ThemeProps {
+export interface ThemeProps {
   theme: Theme;
 }
 

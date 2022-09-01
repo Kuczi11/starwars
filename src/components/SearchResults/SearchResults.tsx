@@ -10,15 +10,16 @@ import {
   Typography,
 } from '@mui/material';
 import headers from 'components/SearchResults/headers';
-import SingleResult from 'components/SingleResult';
+import SingleResult from 'components/SearchResults/SingleResult';
 
-interface Props {
+export interface Props {
   persons: Person[];
 }
 
-interface Person {
+export interface Person {
   name: string;
   homeworld: string;
+  films: string[];
 }
 
 const SearchResults = ({ persons }: Props) => {

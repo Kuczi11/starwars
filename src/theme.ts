@@ -29,6 +29,14 @@ const theme = createTheme({
         fontSize: '1.5rem',
       },
     },
+    h4: {
+      fontSize: '0.8rem',
+      color: 'black',
+      fontWeight: '400',
+      '@media (min-width: 900px)': {
+        fontSize: '1.2rem',
+      },
+    },
   },
 });
 
