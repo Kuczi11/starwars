@@ -40,15 +40,17 @@ const FilmDetails = ({ isOpen, person, setIsOpen }: Props) => {
     <StyledDialog open={isOpen}>
       <StyledDialogContent>
         <Grid container alignItems="center" p={2}>
-          <Grid item xs={6}>
-            <Typography variant="h2">{person.name}</Typography>
+          <Grid item xs={10}>
+            <Typography variant="h2">
+              {`${person.name} appeared in episodes:`}
+            </Typography>
           </Grid>
           <Grid
             item
             display="flex"
             justifyContent="flex-end"
             onClick={handleClose}
-            xs={6}
+            xs={2}
           >
             <CloseIcon fontSize="large" />
           </Grid>

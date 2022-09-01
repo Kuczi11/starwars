@@ -8,20 +8,18 @@ interface Details {
 }
 
 const About = ({ title, releaseDate, openingCrawl }: Details) => {
-  // const maxCharactersAmount = 130;
-  // const slicedOpeningCrawl = openingCrawl
-  //   .split(' ')
-  //   .map((word) => {
-  //     let charactersAmount = 0;
-  //     if (charactersAmount < maxCharactersAmount) {
-  //       charactersAmount += word.length;
-  //       console.log(charactersAmount);
-  //       return word;
-  //     } else {
-  //       return null;
-  //     }
-  //   })
-  //   .join(' ');
+  const maxCharactersAmount = 130;
+  let charactersAmount = 0;
+  const slicedOpeningCrawl = openingCrawl
+    .split(' ')
+    .map((word) => {
+      charactersAmount += word.length;
+      if (charactersAmount < maxCharactersAmount) {
+        return word;
+      }
+      return null;
+    })
+    .join(' ');
 
   return (
     <>
@@ -31,7 +29,7 @@ const About = ({ title, releaseDate, openingCrawl }: Details) => {
           <Typography variant="h3">{releaseDate}</Typography>
         </Grid>
         <Grid item xs={12} my={1}>
-          <Typography variant="h4">{openingCrawl}</Typography>
+          <Typography variant="h4">{slicedOpeningCrawl}</Typography>
         </Grid>
       </Grid>
       <Divider sx={{ borderColor: 'black' }} />
