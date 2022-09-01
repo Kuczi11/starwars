@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { TableCell, TableRow, Typography } from '@mui/material';
+import { TableCell, Typography } from '@mui/material';
+import StyledTableRow from 'components/SingleResult/styled/TableRow.styled';
 
 interface Props {
   person: Person;
@@ -31,7 +32,7 @@ const SingleResult = ({ person }: Props) => {
   }, [person, setPlanetData]);
 
   return (
-    <TableRow>
+    <StyledTableRow>
       <TableCell>
         <Typography variant="h3">{person.name}</Typography>
       </TableCell>
@@ -41,7 +42,7 @@ const SingleResult = ({ person }: Props) => {
       <TableCell align="right">
         <Typography variant="h3">{planetData.population}</Typography>
       </TableCell>
-    </TableRow>
+    </StyledTableRow>
   );
 };
 
