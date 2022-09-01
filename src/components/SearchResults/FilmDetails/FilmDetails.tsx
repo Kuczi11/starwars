@@ -1,5 +1,5 @@
 import React, { SetStateAction, useEffect, useState } from 'react';
-import { Grid, Typography } from '@mui/material';
+import { CircularProgress, Grid, Typography, Box } from '@mui/material';
 import { Person } from 'components/SearchResults/SearchResults';
 import StyledDialog from 'components/SearchResults/FilmDetails/styled/Dialog.styled';
 import CloseIcon from '@mui/icons-material/Close';
@@ -39,7 +39,7 @@ const FilmDetails = ({ isOpen, person, setIsOpen }: Props) => {
   return (
     <StyledDialog open={isOpen}>
       <StyledDialogContent>
-        <Grid container alignItems="center" p={2}>
+        <Grid container alignItems="center" p={4}>
           <Grid item xs={10}>
             <Typography variant="h2">
               {`${person.name} appeared in episodes:`}
@@ -52,11 +52,13 @@ const FilmDetails = ({ isOpen, person, setIsOpen }: Props) => {
             onClick={handleClose}
             xs={2}
           >
-            <CloseIcon fontSize="large" />
+            <CloseIcon color="primary" fontSize="large" />
           </Grid>
           <Grid item xs={12} mt={5}>
             {filmsData.length < person.films.length ? (
-              <Typography variant="h3">Loading...</Typography>
+              <Box display="flex" justifyContent="center">
+                <CircularProgress color="primary" />
+              </Box>
             ) : (
               filmsData.map((film) => (
                 <About

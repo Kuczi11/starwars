@@ -3,7 +3,6 @@ import {
   Grid,
   Table,
   TableBody,
-  TableCell,
   TableContainer,
   TableHead,
   TableRow,
@@ -11,6 +10,7 @@ import {
 } from '@mui/material';
 import headers from 'components/SearchResults/headers';
 import SingleResult from 'components/SearchResults/SingleResult';
+import StyledCell from 'components/SearchResults/styled/TableCell.styled';
 
 export interface Props {
   persons: Person[];
@@ -29,16 +29,18 @@ const SearchResults = ({ persons }: Props) => {
         <TableContainer>
           <Table>
             <TableHead>
-              <TableRow>
-                <TableCell>
-                  <Typography variant="h2">Name</Typography>
-                </TableCell>
-                {headers.map((header) => (
-                  <TableCell align="right" key={header.id}>
-                    <Typography variant="h2">{header.content}</Typography>
-                  </TableCell>
-                ))}
-              </TableRow>
+              {persons.length !== 0 && (
+                <TableRow>
+                  <StyledCell>
+                    <Typography variant="h2">Name</Typography>
+                  </StyledCell>
+                  {headers.map((header) => (
+                    <StyledCell align="right" key={header.id}>
+                      <Typography variant="h2">{header.content}</Typography>
+                    </StyledCell>
+                  ))}
+                </TableRow>
+              )}
             </TableHead>
             <TableBody>
               {persons.map((person) => (

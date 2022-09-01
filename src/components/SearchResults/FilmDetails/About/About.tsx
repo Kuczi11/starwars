@@ -32,7 +32,7 @@ const About = ({ title, releaseDate, openingCrawl }: Details) => {
           <Typography variant="h4">{slicedOpeningCrawl}</Typography>
         </Grid>
       </Grid>
-      <Divider sx={{ borderColor: 'black' }} />
+      <Divider sx={{ borderColor: 'primary.main' }} />
     </>
   );
 };

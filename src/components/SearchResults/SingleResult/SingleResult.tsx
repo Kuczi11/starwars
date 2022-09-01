@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { TableCell, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 import StyledTableRow from 'components/SearchResults/SingleResult/styled/TableRow.styled';
 import FilmDetails from 'components/SearchResults/FilmDetails';
 import { Person } from 'components/SearchResults/SearchResults';
+import StyledCell from 'components/SearchResults/styled/TableCell.styled';
 
 interface Props {
   person: Person;
@@ -36,15 +37,15 @@ const SingleResult = ({ person }: Props) => {
   return (
     <>
       <StyledTableRow onClick={handleDialogOpen}>
-        <TableCell>
+        <StyledCell>
           <Typography variant="h3">{person.name}</Typography>
-        </TableCell>
-        <TableCell align="right">
+        </StyledCell>
+        <StyledCell align="right">
           <Typography variant="h3">{planetData.name}</Typography>
-        </TableCell>
-        <TableCell align="right">
+        </StyledCell>
+        <StyledCell align="right">
           <Typography variant="h3">{planetData.population}</Typography>
-        </TableCell>
+        </StyledCell>
       </StyledTableRow>
       {isOpen && (
         <FilmDetails isOpen={isOpen} setIsOpen={setIsOpen} person={person} />

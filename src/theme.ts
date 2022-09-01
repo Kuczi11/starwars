@@ -6,12 +6,16 @@ const theme = createTheme({
     primary: {
       main: '#FFE81F',
     },
+    info: {
+      main: '#004c59',
+    },
   },
   typography: {
     h1: {
-      fontSize: '3rem',
+      fontSize: '2.5rem',
       color: '#FFE81F',
       fontWeight: 700,
+      textTransform: 'uppercase',
     },
     h2: {
       fontSize: '1.3rem',
@@ -31,7 +35,7 @@ const theme = createTheme({
     },
     h4: {
       fontSize: '0.8rem',
-      color: 'black',
+      color: '#fff',
       fontWeight: '400',
       '@media (min-width: 900px)': {
         fontSize: '1.2rem',
