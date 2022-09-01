@@ -27,8 +27,10 @@ const StyledInput = styled(TextField)(({ theme }: ThemeProps) => ({
     fontWeight: 700,
   },
 
-  '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline': {
-    borderColor: theme.palette.primary.main,
+  '& .MuiOutlinedInput-root': {
+    '&:hover fieldset': {
+      borderColor: theme.palette.primary.main,
+    },
   },
 })) as unknown as typeof TextField;
 
