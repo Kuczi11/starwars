@@ -7,7 +7,11 @@ interface ThemeProps {
 
 const StyledInput = styled(TextField)(({ theme }: ThemeProps) => ({
   width: '100%',
-  margin: '0 2rem',
+  margin: '2rem',
+
+  '@media (min-width: 900px)': {
+    margin: '0 2rem',
+  },
 
   '& fieldset': {
     borderColor: theme.palette.primary.main,

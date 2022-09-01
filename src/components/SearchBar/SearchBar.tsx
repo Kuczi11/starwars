@@ -8,7 +8,12 @@ const SearchBar = ({ fetchPersons }: Props) => {
   const [inputValue, setInputValue] = useState<string>('');
 
   return (
-    <Grid container justifyContent="center" alignItems="center" pt={5}>
+    <Grid
+      container
+      justifyContent="center"
+      alignItems="center"
+      pt={{ xs: 2, md: 5 }}
+    >
       <Grid
         display="flex"
         flexDirection={{ xs: 'column', md: 'row' }}
@@ -17,7 +22,7 @@ const SearchBar = ({ fetchPersons }: Props) => {
         item
         xs={10}
         md={7}
-        my={5}
+        my={{ xs: 0, md: 5 }}
       >
         <StyledInput
           label="Search for you favourite character"

@@ -1,11 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { TableCell, TableRow, Typography } from '@mui/material';
 
 interface Props {
   person: Person;
-  fetchPlanet: (url: string) => Homeworld;
-  homeworld?: string;
-  population?: string;
 }
 
 interface Homeworld {
@@ -18,26 +15,31 @@ interface Person {
   homeworld: string;
 }
 
-const SingleResult = ({
-  person,
-  fetchPlanet,
-  homeworld,
-  population,
-}: Props) => {
+const SingleResult = ({ person }: Props) => {
+  const [planetData, setPlanetData] = useState<Homeworld>({
+    name: '',
+    population: '',
+  });
+
   useEffect(() => {
-    fetchPlanet(person.homeworld);
-  }, [person, fetchPlanet]);
+    const getPlanet = async () => {
+      const response = await fetch(person.homeworld);
+      const body = await response.json();
+      setPlanetData(body);
+    };
+    void getPlanet();
+  }, [person, setPlanetData]);
 
   return (
-    <TableRow key={person.name}>
-      <TableCell align="right">
+    <TableRow>
+      <TableCell>
         <Typography variant="h3">{person.name}</Typography>
       </TableCell>
       <TableCell align="right">
-        <Typography variant="h3">{homeworld}</Typography>
+        <Typography variant="h3">{planetData.name}</Typography>
       </TableCell>
       <TableCell align="right">
-        <Typography variant="h3">{population}</Typography>
+        <Typography variant="h3">{planetData.population}</Typography>
       </TableCell>
     </TableRow>
   );

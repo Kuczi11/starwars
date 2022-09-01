@@ -23,12 +23,15 @@ interface Person {
 
 const SearchResults = ({ persons }: Props) => {
   return (
-    <Grid container justifyContent="center">
+    <Grid container justifyContent="center" mt={{ xs: 2, md: 0 }}>
       <Grid item xs={12} md={7}>
         <TableContainer>
           <Table>
             <TableHead>
               <TableRow>
+                <TableCell>
+                  <Typography variant="h2">Name</Typography>
+                </TableCell>
                 {headers.map((header) => (
                   <TableCell align="right" key={header.id}>
                     <Typography variant="h2">{header.content}</Typography>

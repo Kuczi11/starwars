@@ -1,9 +1,5 @@
 const headers = [
   {
-    id: 0,
-    content: 'Name',
-  },
-  {
     id: 1,
     content: 'Homeworld name',
   },

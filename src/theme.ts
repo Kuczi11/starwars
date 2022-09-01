@@ -14,14 +14,20 @@ const theme = createTheme({
       fontWeight: 700,
     },
     h2: {
-      fontSize: '2rem',
+      fontSize: '1.3rem',
       color: '#FFE81F',
       fontWeight: '500',
+      '@media (min-width: 900px)': {
+        fontSize: '2rem',
+      },
     },
     h3: {
-      fontSize: '1.5rem',
+      fontSize: '1rem',
       color: '#FFE81F',
       fontWeight: '500',
+      '@media (min-width: 900px)': {
+        fontSize: '1.5rem',
+      },
     },
   },
 });
