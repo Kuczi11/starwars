@@ -13,7 +13,7 @@ import SingleResult from 'components/SearchResults/SingleResult';
 import StyledCell from 'components/SearchResults/styled/TableCell.styled';
 
 export interface Props {
-  persons: Person[];
+  persons: Person[][];
 }
 
 export interface Person {
@@ -23,6 +23,7 @@ export interface Person {
 }
 
 const SearchResults = ({ persons }: Props) => {
+  console.log(persons.length);
   return (
     <Grid container justifyContent="center" mt={{ xs: 2, md: 0 }}>
       <Grid item xs={12} md={7}>
@@ -43,9 +44,11 @@ const SearchResults = ({ persons }: Props) => {
               )}
             </TableHead>
             <TableBody>
-              {persons.map((person) => (
-                <SingleResult key={person.name} person={person} />
-              ))}
+              {persons.map((person) =>
+                person.map((data) => (
+                  <SingleResult key={data.name} person={data} />
+                ))
+              )}
             </TableBody>
           </Table>
         </TableContainer>

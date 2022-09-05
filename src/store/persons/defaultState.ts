@@ -1,5 +1,5 @@
 interface Data {
-  persons: Person[];
+  persons: Person[][];
   errorMessage: string;
 }
 
