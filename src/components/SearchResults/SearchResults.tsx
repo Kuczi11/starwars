@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Grid,
   Table,
@@ -11,6 +11,7 @@ import {
 import headers from 'components/SearchResults/headers';
 import SingleResult from 'components/SearchResults/SingleResult';
 import StyledCell from 'components/SearchResults/styled/TableCell.styled';
+import PageButtons from 'components/SearchResults/PageButtons';
 
 export interface Props {
   persons: Person[][];
@@ -23,7 +24,16 @@ export interface Person {
 }
 
 const SearchResults = ({ persons }: Props) => {
-  console.log(persons.length);
+  const [pageIndex, setPageIndex] = useState<number>(0);
+
+  const handleDecrementPage = () => {
+    setPageIndex((prevState) => prevState - 1);
+  };
+
+  const handleIncrementPage = () => {
+    setPageIndex((prevState) => prevState + 1);
+  };
+
   return (
     <Grid container justifyContent="center" mt={{ xs: 2, md: 0 }}>
       <Grid item xs={12} md={7}>
@@ -44,15 +54,21 @@ const SearchResults = ({ persons }: Props) => {
               )}
             </TableHead>
             <TableBody>
-              {persons.map((person) =>
-                person.map((data) => (
-                  <SingleResult key={data.name} person={data} />
-                ))
-              )}
+              {persons[pageIndex]?.map((person) => (
+                <SingleResult key={person.name} person={person} />
+              ))}
             </TableBody>
           </Table>
         </TableContainer>
       </Grid>
+      {persons.length > 1 && (
+        <PageButtons
+          pageIndex={pageIndex}
+          handleDecrementPage={handleDecrementPage}
+          handleIncrementPage={handleIncrementPage}
+          persons={persons}
+        />
+      )}
     </Grid>
   );
 };
