@@ -1,17 +1,15 @@
 import { configureStore } from '@reduxjs/toolkit';
-import createSagaMiddleware from 'redux-saga';
-import rootSaga from 'store/sagas';
 import reducers from 'store/reducers';
-
-const sagaMiddleware = createSagaMiddleware();
+import { peopleDataApi } from 'store/query';
 
 const store = configureStore({
-  reducer: reducers,
+  reducer: {
+    [peopleDataApi.reducerPath]: peopleDataApi.reducer,
+    reducers,
+  },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(sagaMiddleware),
+    getDefaultMiddleware().concat(peopleDataApi.middleware),
 });
-
-sagaMiddleware.run(rootSaga);
 
 export type RootState = ReturnType<typeof store.getState>;
 export default store;

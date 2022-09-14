@@ -1,11 +1,16 @@
 import React, { useState } from 'react';
 import { Button, Grid } from '@mui/material';
 import StyledInput from 'components/SearchBar/styled/TextField.styled';
-import { Props } from 'components/SearchBar/types';
-import { SEARCH_PEOPLE_URL } from 'services/apiConfig';
+import { peopleDataApi } from 'store/query';
 
-const SearchBar = ({ fetchPersons }: Props) => {
+const SearchBar = () => {
   const [inputValue, setInputValue] = useState<string>('');
+  const { useLazyGetPersonByNameQuery } = peopleDataApi;
+  const [trigger] = useLazyGetPersonByNameQuery();
+
+  const handleClick = () => {
+    void trigger(inputValue);
+  };
 
   return (
     <Grid container justifyContent="center" alignItems="center" pt={2}>
@@ -24,10 +29,7 @@ const SearchBar = ({ fetchPersons }: Props) => {
           value={inputValue}
           onChange={(event) => setInputValue(event.target.value)}
         />
-        <Button
-          variant="contained"
-          onClick={() => fetchPersons(`${SEARCH_PEOPLE_URL}${inputValue}`)}
-        >
+        <Button variant="contained" onClick={handleClick}>
           Search
         </Button>
       </Grid>
