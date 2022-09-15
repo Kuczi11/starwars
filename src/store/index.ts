@@ -3,10 +3,7 @@ import reducers from 'store/reducers';
 import { peopleDataApi } from 'store/query';
 
 const store = configureStore({
-  reducer: {
-    [peopleDataApi.reducerPath]: peopleDataApi.reducer,
-    reducers,
-  },
+  reducer: reducers,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(peopleDataApi.middleware),
 });

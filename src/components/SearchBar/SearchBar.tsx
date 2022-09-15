@@ -1,14 +1,18 @@
 import React, { useState } from 'react';
 import { Button, Grid } from '@mui/material';
 import StyledInput from 'components/SearchBar/styled/TextField.styled';
-import { peopleDataApi } from 'store/query';
+import { useLazyGetPersonByNameQuery } from 'store/query';
 
-const SearchBar = () => {
+interface Props {
+  changeInput: (query: string) => string;
+}
+
+const SearchBar = ({ changeInput }: Props) => {
   const [inputValue, setInputValue] = useState<string>('');
-  const { useLazyGetPersonByNameQuery } = peopleDataApi;
   const [trigger] = useLazyGetPersonByNameQuery();
 
   const handleClick = () => {
+    changeInput(inputValue);
     void trigger(inputValue);
   };
 

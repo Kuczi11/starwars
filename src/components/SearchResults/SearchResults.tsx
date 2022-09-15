@@ -1,27 +1,21 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import {
   Grid,
   Table,
-  // TableBody,
+  TableBody,
   TableContainer,
-  Typography,
   TableHead,
   TableRow,
-  TableCell,
-  // Typography,
+  Typography,
 } from '@mui/material';
-import peopleDataApi, { useLazyGetPersonByNameQuery } from 'store/query';
-// import headers from 'components/SearchResults/headers';
-// import SingleResult from 'components/SearchResults/SingleResult';
-// import StyledCell from 'components/SearchResults/styled/TableCell.styled';
-// import peopleDataApi from 'store/query';
-// import PageButtons from 'components/SearchResults/PageButtons';
+import { peopleDataApi } from 'store/query';
+import { useSelector } from 'react-redux';
+import headers from 'components/SearchResults/headers';
+import StyledCell from 'components/SearchResults/styled/TableCell.styled';
+import SingleResult from 'components/SearchResults/SingleResult';
 
 export interface Props {
-  persons?: Person[];
-  nextPageUrl?: string;
-  previousPageUrl?: string;
-  queryState: any;
+  inputValue: any;
 }
 
 export interface Person {
@@ -30,43 +24,48 @@ export interface Person {
   films: string[];
 }
 
-const SearchResults = ({ queryState, previousPageUrl, nextPageUrl }: Props) => {
+const SearchResults = ({ inputValue }: Props) => {
+  const selector = peopleDataApi.endpoints.getPersonByName.select(inputValue);
+  const queryData = useSelector(selector);
+  const { data, isError, isLoading, isSuccess, isUninitialized } = queryData;
+
   return (
-    <Grid container justifyContent="center" mt={{ xs: 2, md: 0 }}>
-      <Grid item xs={12} md={7}>
-        <TableContainer>
-          <Table>
-            {/* <TableHead> */}
-            {/*  {peopleData.length !== 0 && ( */}
-            {/*    <TableRow> */}
-            {/*      <StyledCell> */}
-            {/*        <Typography variant="h2">Name</Typography> */}
-            {/*      </StyledCell> */}
-            {/*      {headers.map((header) => ( */}
-            {/*        <StyledCell align="right" key={header.id}> */}
-            {/*          <Typography variant="h2">{header.content}</Typography> */}
-            {/*        </StyledCell> */}
-            {/*      ))} */}
-            {/*    </TableRow> */}
-            {/*  )} */}
-            {/* </TableHead> */}
-            {/* <TableBody> */}
-            {/*  {persons[pageIndex]?.map((person) => ( */}
-            {/*    <SingleResult key={person.name} person={person} /> */}
-            {/*  ))} */}
-            {/* </TableBody> */}
-          </Table>
-        </TableContainer>
-      </Grid>
-      {/* {persons.length > 1 && ( */}
-      {/*  <PageButtons */}
-      {/*    pageIndex={pageIndex} */}
-      {/*    handleDecrementPage={handleDecrementPage} */}
-      {/*    handleIncrementPage={handleIncrementPage} */}
-      {/*    persons={persons} */}
-      {/*  /> */}
-      {/* )} */}
-    </Grid>
+    <>
+      {isUninitialized && null}
+      {isError && alert('an error during fetching data occurred')}
+      {isLoading && (
+        <Typography mt={5} align="center" variant="h3">
+          Loading data...
+        </Typography>
+      )}
+      {isSuccess && (
+        <Grid container justifyContent="center" mt={{ xs: 2, md: 0 }}>
+          <Grid item xs={12} md={7}>
+            <TableContainer>
+              <Table>
+                <TableHead>
+                  <TableRow>
+                    <StyledCell>
+                      <Typography variant="h2">Name</Typography>
+                    </StyledCell>
+                    {headers.map((header) => (
+                      <StyledCell key={header.id} align="right">
+                        <Typography variant="h2">{header.content}</Typography>
+                      </StyledCell>
+                    ))}
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {data.results.map((result: Person) => (
+                    <SingleResult person={result} key={result.name} />
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </Grid>
+        </Grid>
+      )}
+    </>
   );
 };
 

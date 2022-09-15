@@ -9,6 +9,12 @@ export const peopleDataApi = createApi({
     getPersonByName: builder.query({
       query: (name: string) => `https://swapi.dev/api/people/?search=${name}`,
     }),
+    getPlanet: builder.query({
+      query: (planet: string) => planet,
+    }),
+    getFilm: builder.query({
+      query: (film: string) => film,
+    }),
     getNextPage: builder.query({
       query: (url: string) => url,
     }),
@@ -18,4 +24,8 @@ export const peopleDataApi = createApi({
   }),
 });
 
-export const { useLazyGetPersonByNameQuery } = peopleDataApi;
+export const {
+  useLazyGetPersonByNameQuery,
+  useGetPlanetQuery,
+  useGetFilmQuery,
+} = peopleDataApi;
