@@ -8,7 +8,7 @@ interface Props {
 }
 
 const SearchBar = ({ changeInput }: Props) => {
-  const [inputValue, setInputValue] = useState<string>('');
+  const [inputValue, setInputValue] = useState('');
   const [trigger] = useLazyGetPersonByNameQuery();
 
   const handleClick = () => {

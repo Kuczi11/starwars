@@ -47,3 +47,5 @@
 // };
 //
 // export default PageButtons;
+
+export default null;

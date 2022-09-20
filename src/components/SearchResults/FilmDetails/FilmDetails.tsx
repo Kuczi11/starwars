@@ -1,11 +1,10 @@
-import React, { SetStateAction, useEffect, useState } from 'react';
-import { CircularProgress, Grid, Typography, Box } from '@mui/material';
+import React, { SetStateAction } from 'react';
+import { Grid, Typography } from '@mui/material';
 import { Person } from 'components/SearchResults/SearchResults';
 import StyledDialog from 'components/SearchResults/FilmDetails/styled/Dialog.styled';
 import CloseIcon from '@mui/icons-material/Close';
 import About from 'components/SearchResults/FilmDetails/About';
 import StyledDialogContent from 'components/SearchResults/FilmDetails/styled/DialogContent.styled';
-import { useGetFilmQuery } from 'store/query';
 
 interface Props {
   isOpen: boolean;
@@ -20,14 +19,9 @@ export interface FilmProps {
 }
 
 const FilmDetails = ({ isOpen, person, setIsOpen }: Props) => {
-  const [filmsData, setFilmsData] = useState<FilmProps[]>([]);
   const handleClose = () => {
     setIsOpen(false);
   };
-
-  for (let i = 0; i < person.films.length; i++) {
-    const { data } = useGetFilmQuery(person.films[i]);
-  }
 
   return (
     <StyledDialog open={isOpen}>
@@ -48,20 +42,9 @@ const FilmDetails = ({ isOpen, person, setIsOpen }: Props) => {
             <CloseIcon color="primary" fontSize="large" />
           </Grid>
           <Grid item xs={12} mt={5}>
-            {filmsData.length < person.films.length ? (
-              <Box display="flex" justifyContent="center">
-                <CircularProgress color="primary" />
-              </Box>
-            ) : (
-              filmsData.map((film) => (
-                <About
-                  key={film.title}
-                  title={film.title}
-                  releaseDate={film.release_date}
-                  openingCrawl={film.opening_crawl}
-                />
-              ))
-            )}
+            {person.films.map((film) => (
+              <About key={film} filmPath={film} />
+            ))}
           </Grid>
         </Grid>
       </StyledDialogContent>

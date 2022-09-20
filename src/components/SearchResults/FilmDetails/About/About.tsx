@@ -1,16 +1,12 @@
 import React from 'react';
-import { Divider, Grid, Typography } from '@mui/material';
+import { CircularProgress, Divider, Grid, Typography } from '@mui/material';
+import { useGetFilmQuery } from 'store/query';
 
-interface Details {
-  title: string;
-  releaseDate: string;
-  openingCrawl: string;
-}
-
-const About = ({ title, releaseDate, openingCrawl }: Details) => {
+const About = ({ filmPath }: { filmPath: string }) => {
+  const { data: film, isLoading } = useGetFilmQuery(filmPath);
   const maxCharactersAmount = 130;
   let charactersAmount = 0;
-  const slicedOpeningCrawl = openingCrawl
+  const slicedOpeningCrawl = film?.opening_crawl
     .split(' ')
     .map((word) => {
       charactersAmount += word.length;
@@ -21,12 +17,20 @@ const About = ({ title, releaseDate, openingCrawl }: Details) => {
     })
     .join(' ');
 
+  if (isLoading) {
+    return (
+      <Grid item display="flex" justifyContent="center" mb={2}>
+        <CircularProgress />
+      </Grid>
+    );
+  }
+
   return (
     <>
       <Grid container mt={2}>
         <Grid item display="flex" justifyContent="space-between" xs={12}>
-          <Typography variant="h3">{title}</Typography>
-          <Typography variant="h3">{releaseDate}</Typography>
+          <Typography variant="h3">{film?.title}</Typography>
+          <Typography variant="h3">{film?.release_date}</Typography>
         </Grid>
         <Grid item xs={12} my={1}>
           <Typography variant="h4">{slicedOpeningCrawl}</Typography>

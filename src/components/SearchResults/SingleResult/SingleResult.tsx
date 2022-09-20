@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Typography } from '@mui/material';
 import StyledTableRow from 'components/SearchResults/SingleResult/styled/TableRow.styled';
 import { Person } from 'components/SearchResults/SearchResults';
 import StyledCell from 'components/SearchResults/styled/TableCell.styled';
 import { useGetPlanetQuery } from 'store/query';
+import FilmDetails from 'components/SearchResults/FilmDetails';
 
 interface Props {
   person: Person;
@@ -15,16 +16,17 @@ interface Homeworld {
 }
 
 const SingleResult = ({ person }: Props) => {
+  const [isOpen, setIsOpen] = useState(false);
   const { data, isSuccess } = useGetPlanetQuery(person.homeworld);
   const planet: Homeworld = data;
 
-  // const handleDialogOpen = () => {
-  //   setIsOpen((prevState) => !prevState);
-  // };
+  const handleDialogOpen = () => {
+    setIsOpen((prevState) => !prevState);
+  };
 
   return (
     <>
-      <StyledTableRow>
+      <StyledTableRow onClick={handleDialogOpen}>
         <StyledCell>
           <Typography variant="h3">{person.name}</Typography>
         </StyledCell>
@@ -39,9 +41,9 @@ const SingleResult = ({ person }: Props) => {
           </>
         )}
       </StyledTableRow>
-      {/* {isOpen && ( */}
-      {/*  <FilmDetails isOpen={isOpen} setIsOpen={setIsOpen} person={person} /> */}
-      {/* )} */}
+      {isOpen && (
+        <FilmDetails isOpen={isOpen} setIsOpen={setIsOpen} person={person} />
+      )}
     </>
   );
 };

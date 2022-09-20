@@ -1,4 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { FilmProps } from 'components/SearchResults/FilmDetails/FilmDetails';
 
 export const peopleDataApi = createApi({
   reducerPath: 'peopleDataApi',
@@ -12,7 +13,7 @@ export const peopleDataApi = createApi({
     getPlanet: builder.query({
       query: (planet: string) => planet,
     }),
-    getFilm: builder.query({
+    getFilm: builder.query<FilmProps, string>({
       query: (film: string) => film,
     }),
     getNextPage: builder.query({
