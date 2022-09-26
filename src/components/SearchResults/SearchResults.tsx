@@ -36,23 +36,24 @@ const SearchResults = ({ inputValue }: Props) => {
   const { data, isError, isLoading, isSuccess, isUninitialized } = queryData;
   const [fetchNextPage, { data: nextPage, isSuccess: nextPageFetched }] =
     useLazyGetNextPageQuery();
-  const [fetchPreviousPage, { data: previousPage }] =
-    useLazyGetPreviousPageQuery();
+  const [
+    fetchPreviousPage,
+    { data: previousPage, isSuccess: previousPageFetched },
+  ] = useLazyGetPreviousPageQuery();
   const [peopleData, setPeopleData] = useState<Person[]>([]);
 
   useEffect(() => {
     isSuccess && setPeopleData(data.results);
   }, [data, isSuccess]);
 
-  const handleIncrementPage = async () => {
-    let nextPageUrl = data.next;
-    await fetchNextPage(nextPageUrl);
-    nextPageUrl = nextPage.next;
+  const handleIncrementPage = () => {
+    void fetchNextPage(data.next);
   };
 
   useEffect(() => {
     nextPageFetched && setPeopleData(nextPage.results);
-  }, [nextPage, nextPageFetched]);
+    previousPageFetched && setPeopleData(previousPage.results);
+  }, [nextPage, nextPageFetched, previousPageFetched, previousPage]);
 
   const handleDecrementPage = () => {
     void fetchPreviousPage(data.previous);
@@ -95,7 +96,6 @@ const SearchResults = ({ inputValue }: Props) => {
           </Grid>
           <PageButtons
             handleDecrementPage={() => console.log('clicked')}
-            /* eslint-disable-next-line @typescript-eslint/no-misused-promises */
             handleIncrementPage={handleIncrementPage}
             disableNext={data.next === null}
             disablePrevious={data.previous === null}
