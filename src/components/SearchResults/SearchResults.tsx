@@ -1,4 +1,5 @@
-import React from 'react';
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import React, { useEffect, useState } from 'react';
 import {
   Grid,
   Table,
@@ -8,11 +9,16 @@ import {
   TableRow,
   Typography,
 } from '@mui/material';
-import { peopleDataApi } from 'store/query';
+import {
+  peopleDataApi,
+  useLazyGetNextPageQuery,
+  useLazyGetPreviousPageQuery,
+} from 'store/query';
 import { useSelector } from 'react-redux';
 import headers from 'components/SearchResults/headers';
 import StyledCell from 'components/SearchResults/styled/TableCell.styled';
 import SingleResult from 'components/SearchResults/SingleResult';
+import PageButtons from 'components/SearchResults/PageButtons';
 
 export interface Props {
   inputValue: any;
@@ -28,6 +34,30 @@ const SearchResults = ({ inputValue }: Props) => {
   const selector = peopleDataApi.endpoints.getPersonByName.select(inputValue);
   const queryData = useSelector(selector);
   const { data, isError, isLoading, isSuccess, isUninitialized } = queryData;
+  const [fetchNextPage, { data: nextPage, isSuccess: nextPageFetched }] =
+    useLazyGetNextPageQuery();
+  const [fetchPreviousPage, { data: previousPage }] =
+    useLazyGetPreviousPageQuery();
+  const [peopleData, setPeopleData] = useState<Person[]>([]);
+
+  useEffect(() => {
+    isSuccess && setPeopleData(data.results);
+  }, [data, isSuccess]);
+
+  const handleIncrementPage = async () => {
+    let nextPageUrl = data.next;
+    await fetchNextPage(nextPageUrl);
+    nextPageUrl = nextPage.next;
+  };
+
+  useEffect(() => {
+    nextPageFetched && setPeopleData(nextPage.results);
+  }, [nextPage, nextPageFetched]);
+
+  const handleDecrementPage = () => {
+    void fetchPreviousPage(data.previous);
+    setPeopleData(previousPage.results);
+  };
 
   return (
     <>
@@ -56,13 +86,20 @@ const SearchResults = ({ inputValue }: Props) => {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {data.results.map((result: Person) => (
+                  {peopleData.map((result: Person) => (
                     <SingleResult person={result} key={result.name} />
                   ))}
                 </TableBody>
               </Table>
             </TableContainer>
           </Grid>
+          <PageButtons
+            handleDecrementPage={() => console.log('clicked')}
+            /* eslint-disable-next-line @typescript-eslint/no-misused-promises */
+            handleIncrementPage={handleIncrementPage}
+            disableNext={data.next === null}
+            disablePrevious={data.previous === null}
+          />
         </Grid>
       )}
     </>

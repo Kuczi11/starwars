@@ -29,4 +29,6 @@ export const {
   useLazyGetPersonByNameQuery,
   useGetPlanetQuery,
   useGetFilmQuery,
+  useLazyGetNextPageQuery,
+  useLazyGetPreviousPageQuery,
 } = peopleDataApi;
