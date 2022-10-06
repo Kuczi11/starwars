@@ -5,15 +5,20 @@ import { useLazyGetPersonByNameQuery } from 'store/query';
 
 interface Props {
   changeInput: (query: string) => string;
+  page: number;
 }
 
-const SearchBar = ({ changeInput }: Props) => {
+const SearchBar = ({ changeInput, page }: Props) => {
   const [inputValue, setInputValue] = useState('');
   const [trigger] = useLazyGetPersonByNameQuery();
 
   const handleClick = () => {
     changeInput(inputValue);
-    void trigger(inputValue);
+    const queryParams = {
+      name: inputValue,
+      page,
+    };
+    void trigger(queryParams);
   };
 
   return (

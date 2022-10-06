@@ -1,5 +1,5 @@
-// import PageButtons from 'components/SearchResults/PageButtons/PageButtons';
-//
-// export default PageButtons;
+import PageButtons from 'components/SearchResults/PageButtons/PageButtons';
 
-export default null;
+export default PageButtons;
+
+// export default null;
