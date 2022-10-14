@@ -41,8 +41,10 @@ const SearchResults = ({
   decrementPage,
   page,
 }: Props) => {
-  // @ts-expect-error
-  const selector = peopleDataApi.endpoints.getPersonByName.select(inputValue);
+  const selector = peopleDataApi.endpoints.getPersonByName.select({
+    name: inputValue,
+    page,
+  });
   const queryData = useSelector(selector);
   const {
     data: people = {} as PeopleData,
@@ -59,22 +61,21 @@ const SearchResults = ({
       isSuccess: nextPageFetched,
     },
   ] = useLazyGetPersonByNameQuery();
-  const [peopleData, setPeopleData] = useState(people);
+  const [peopleData, setPeopleData] = useState<Person[]>([]);
 
   useEffect(() => {
-    setPeopleData(people);
-  }, [people]);
+    isSuccess && setPeopleData(people.results);
+    nextPageFetched && setPeopleData(nextPage.results);
+  }, [people.results, isSuccess, nextPageFetched, nextPage.results]);
 
   const handleDecrementPage = () => {
     decrementPage();
     void trigger({ name: inputValue, page });
-    setPeopleData(nextPage);
   };
 
   const handleIncrementPage = () => {
     incrementPage();
     void trigger({ name: inputValue, page });
-    setPeopleData(nextPage);
   };
 
   if (isError || nextPageLoadError) {
@@ -93,41 +94,37 @@ const SearchResults = ({
     );
   }
 
-  if (isSuccess || nextPageFetched) {
-    return (
-      <Grid container justifyContent="center" mt={{ xs: 2, md: 0 }}>
-        <Grid item xs={12} md={7}>
-          <TableContainer>
-            <Table>
-              <TableHead>
-                <TableRow>
-                  <StyledCell>
-                    <Typography variant="h2">Name</Typography>
+  return (
+    <Grid container justifyContent="center" mt={{ xs: 2, md: 0 }}>
+      <Grid item xs={12} md={7}>
+        <TableContainer>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <StyledCell>
+                  <Typography variant="h2">Name</Typography>
+                </StyledCell>
+                {headers.map((header) => (
+                  <StyledCell key={header.id} align="right">
+                    <Typography variant="h2">{header.content}</Typography>
                   </StyledCell>
-                  {headers.map((header) => (
-                    <StyledCell key={header.id} align="right">
-                      <Typography variant="h2">{header.content}</Typography>
-                    </StyledCell>
-                  ))}
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {peopleData.results.map((result) => (
-                  <SingleResult person={result} key={result.name} />
                 ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </Grid>
-        <PageButtons
-          handleDecrementPage={handleDecrementPage}
-          handleIncrementPage={handleIncrementPage}
-        />
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {peopleData?.map((result) => (
+                <SingleResult person={result} key={result.name} />
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
       </Grid>
-    );
-  }
-
-  return null;
+      <PageButtons
+        handleDecrementPage={handleDecrementPage}
+        handleIncrementPage={handleIncrementPage}
+      />
+    </Grid>
+  );
 };
 
 export default SearchResults;
